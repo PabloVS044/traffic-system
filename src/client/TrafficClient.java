@@ -15,7 +15,8 @@ import java.util.Scanner;
  * Principio SRP: Solo se encarga de la interfaz de usuario y comunicacion.
  */
 public class TrafficClient {
-    private static final String HOST = "localhost";
+    private static final String HOST = System.getenv("SERVER_HOST") != null
+            ? System.getenv("SERVER_HOST") : "localhost";
     private static final int PORT = 5000;
 
     public static void main(String[] args) {

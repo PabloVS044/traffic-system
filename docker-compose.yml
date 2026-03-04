@@ -1,0 +1,22 @@
+services:
+  server:
+    build: .
+    command: java server.TrafficServer
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 5000 || exit 1"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  client:
+    build: .
+    command: java client.TrafficClient
+    environment:
+      - SERVER_HOST=server
+    depends_on:
+      server:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
